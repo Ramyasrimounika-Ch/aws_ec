@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Ramyasrimounika-Ch/aws_ec.git'
+                git branch: 'main', url: 'https://github.com/Ramyasrimounika-Ch/aws_ec.git'
             }
         }
 
