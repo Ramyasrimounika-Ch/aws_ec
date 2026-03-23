@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
+        USERNAME = "2023bcs0223mounika"
+        REG = "2023BCS0223"
+        ROLL = "223"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/Ramyasrimounika-Ch/aws_ec.git'
+            }
+        }
+
+        stage('Build Images') {
+            steps {
+                sh """
+                docker build -t $USERNAME/${REG}_${ROLL}_frontend ./frontend
+                docker build -t $USERNAME/${REG}_${ROLL}_backend ./backend
+                """
+            }
+        }
+
+        stage('Push to DockerHub') {
+            steps {
+                sh """
+                echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+
+                docker push $USERNAME/${REG}_${ROLL}_frontend
+                docker push $USERNAME/${REG}_${ROLL}_backend
+                """
+            }
+        }
+    }
+}
