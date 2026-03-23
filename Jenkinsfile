@@ -18,8 +18,8 @@ pipeline {
         stage('Build Images') {
             steps {
                 sh """
-                docker build -t $USERNAME/${REG}_${ROLL}_frontend ./frontend
-                docker build -t $USERNAME/${REG}_${ROLL}_backend ./backend
+                docker build -t $USERNAME/${REG}_${ROLL}_frontend:latest ./frontend
+                docker build -t $USERNAME/${REG}_${ROLL}_backend:latest ./backend
                 """
             }
         }
@@ -29,8 +29,8 @@ pipeline {
                 sh """
                 echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
 
-                docker push $USERNAME/${REG}_${ROLL}_frontend
-                docker push $USERNAME/${REG}_${ROLL}_backend
+                docker push $USERNAME/${REG}_${ROLL}_frontend:latest
+                docker push $USERNAME/${REG}_${ROLL}_backend:latest
                 """
             }
         }
