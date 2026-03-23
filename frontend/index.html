@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Details</title>
+</head>
+<body>
+    <h1>Student Details</h1>
+    <p id="name"></p>
+    <p id="roll"></p>
+    <p id="reg"></p>
+
+    <script>
+        fetch("http://localhost:5000/student-details")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("name").innerText = "Name: " + data.name;
+            document.getElementById("roll").innerText = "Roll: " + data.roll_number;
+            document.getElementById("reg").innerText = "Register: " + data.register_number;
+        });
+    </script>
+</body>
+</html>
